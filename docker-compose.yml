@@ -1,0 +1,39 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=texconnect
+      - PORT=3001
+      - JWT_SECRET=texconnect_super_secret_key_2024
+    depends_on:
+      - postgres
+    networks:
+      - texconnect-network
+
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: texconnect
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - texconnect-network
+
+volumes:
+  pgdata:
+
+networks:
+  texconnect-network:
+    driver: bridge
