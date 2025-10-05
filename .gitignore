@@ -1,2 +1,11 @@
-.env
+
 .env.*
+
+*.local
+*.secret
+*.pem
+*.key
+
+node_modules/
+
+
